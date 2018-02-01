@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<vdb name="Prueba" version="1">
+<description/>
+<property name="validationDateTime" value="Thu Feb 01 16:45:17 ART 2018"/>
+<property name="validationVersion" value="8.12.11"/>
+<model name="SQLServer_OCP">
+<source connection-jndi-name="java:/SQLServer" name="SQLServer_OCP" translator-name="sqlserver"/>
+<metadata type="DDL"><![CDATA[
+
+CREATE FOREIGN TABLE MeteorologyInfo (
+	"Date" string(2147483647) OPTIONS(NAMEINSOURCE '"Date"', NATIVE_TYPE 'nvarchar', FIXED_LENGTH 'TRUE'),
+	"Hour" string(2147483647) OPTIONS(NAMEINSOURCE '"Hour"', NATIVE_TYPE 'nvarchar', FIXED_LENGTH 'TRUE'),
+	Station integer OPTIONS(NAMEINSOURCE '"Station"', NATIVE_TYPE 'int', FIXED_LENGTH 'TRUE'),
+	Wind float OPTIONS(NAMEINSOURCE '"Wind"', NATIVE_TYPE 'float', FIXED_LENGTH 'TRUE'),
+	WindDirection float OPTIONS(NAMEINSOURCE '"WindDirection"', NATIVE_TYPE 'float', FIXED_LENGTH 'TRUE'),
+	TEMP_C float OPTIONS(NAMEINSOURCE '"TEMP_C"', NATIVE_TYPE 'float', FIXED_LENGTH 'TRUE'),
+	HR_PORC float OPTIONS(NAMEINSOURCE '"HR_PORC"', NATIVE_TYPE 'float', FIXED_LENGTH 'TRUE'),
+	PRESS_MBAR float OPTIONS(NAMEINSOURCE '"PRESS_MBAR"', NATIVE_TYPE 'float', FIXED_LENGTH 'TRUE'),
+	PLUV_MM float OPTIONS(NAMEINSOURCE '"PLUV_MM"', NATIVE_TYPE 'float', FIXED_LENGTH 'TRUE'),
+	RAD_SOL float OPTIONS(NAMEINSOURCE '"RAD_SOL"', NATIVE_TYPE 'float', FIXED_LENGTH 'TRUE'),
+	UV_UVINDEX float OPTIONS(NAMEINSOURCE '"UV_UVINDEX"', NATIVE_TYPE 'float', FIXED_LENGTH 'TRUE')
+) OPTIONS(NAMEINSOURCE '"MeteorologyDB"."dbo"."MeteorologyInfo"', UPDATABLE 'TRUE', CARDINALITY '60');
+
+]]></metadata>
+</model>
+<model name="Vista1" type="VIRTUAL">
+<property name="imports" value="SQLServer_OCP"/>
+<metadata type="DDL"><![CDATA[
+
+CREATE VIEW MeteorologyInfo (
+	"Date" string(2147483647) OPTIONS(NAMEINSOURCE '"Date"', NATIVE_TYPE 'nvarchar', UPDATABLE 'FALSE', FIXED_LENGTH 'TRUE'),
+	"Hour" string(2147483647) OPTIONS(NAMEINSOURCE '"Hour"', NATIVE_TYPE 'nvarchar', UPDATABLE 'FALSE', FIXED_LENGTH 'TRUE'),
+	Station integer OPTIONS(NAMEINSOURCE '"Station"', NATIVE_TYPE 'int', UPDATABLE 'FALSE', FIXED_LENGTH 'TRUE'),
+	Wind float OPTIONS(NAMEINSOURCE '"Wind"', NATIVE_TYPE 'float', UPDATABLE 'FALSE', FIXED_LENGTH 'TRUE'),
+	WindDirection float OPTIONS(NAMEINSOURCE '"WindDirection"', NATIVE_TYPE 'float', UPDATABLE 'FALSE', FIXED_LENGTH 'TRUE'),
+	TEMP_C float OPTIONS(NAMEINSOURCE '"TEMP_C"', NATIVE_TYPE 'float', UPDATABLE 'FALSE', FIXED_LENGTH 'TRUE'),
+	HR_PORC float OPTIONS(NAMEINSOURCE '"HR_PORC"', NATIVE_TYPE 'float', UPDATABLE 'FALSE', FIXED_LENGTH 'TRUE'),
+	PRESS_MBAR float OPTIONS(NAMEINSOURCE '"PRESS_MBAR"', NATIVE_TYPE 'float', UPDATABLE 'FALSE', FIXED_LENGTH 'TRUE'),
+	PLUV_MM float OPTIONS(NAMEINSOURCE '"PLUV_MM"', NATIVE_TYPE 'float', UPDATABLE 'FALSE', FIXED_LENGTH 'TRUE'),
+	RAD_SOL float OPTIONS(NAMEINSOURCE '"RAD_SOL"', NATIVE_TYPE 'float', UPDATABLE 'FALSE', FIXED_LENGTH 'TRUE'),
+	UV_UVINDEX float OPTIONS(NAMEINSOURCE '"UV_UVINDEX"', NATIVE_TYPE 'float', UPDATABLE 'FALSE', FIXED_LENGTH 'TRUE')
+) OPTIONS(NAMEINSOURCE '"MeteorologyDB"."dbo"."MeteorologyInfo"', CARDINALITY '60') 
+AS
+	SELECT * FROM SQLServer_OCP.MeteorologyInfo;
+
+]]></metadata>
+</model>
+</vdb>
