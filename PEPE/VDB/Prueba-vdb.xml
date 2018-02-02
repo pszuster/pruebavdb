@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <vdb name="Prueba" version="1">
 <description/>
-<property name="validationDateTime" value="Fri Feb 02 14:30:19 ART 2018"/>
+<property name="validationDateTime" value="Fri Feb 02 14:34:27 ART 2018"/>
 <property name="validationVersion" value="8.12.11"/>
+<model name="PostgreSQL_OCP">
+<source connection-jndi-name="java:/StockPG_DS" name="PostgreSQL_OCP" translator-name="postgresql"/>
+<metadata type="DDL"><![CDATA[
+
+CREATE FOREIGN TABLE readings (
+	readingdate timestamp OPTIONS(NAMEINSOURCE '"readingdate"', NATIVE_TYPE 'timestamp', FIXED_LENGTH 'TRUE'),
+	temp double OPTIONS(NAMEINSOURCE '"temp"', NATIVE_TYPE 'float8', FIXED_LENGTH 'TRUE'),
+	station integer OPTIONS(NAMEINSOURCE '"station"', NATIVE_TYPE 'int4', FIXED_LENGTH 'TRUE'),
+	wind double OPTIONS(NAMEINSOURCE '"wind"', NATIVE_TYPE 'float8', FIXED_LENGTH 'TRUE'),
+	pressure double OPTIONS(NAMEINSOURCE '"pressure"', NATIVE_TYPE 'float8', FIXED_LENGTH 'TRUE'),
+	rain double OPTIONS(NAMEINSOURCE '"rain"', NATIVE_TYPE 'float8', FIXED_LENGTH 'TRUE'),
+	uvindex double OPTIONS(NAMEINSOURCE '"uvindex"', NATIVE_TYPE 'float8', FIXED_LENGTH 'TRUE')
+) OPTIONS(NAMEINSOURCE '"public"."readings"', UPDATABLE 'TRUE');
+
+]]></metadata>
+</model>
 <model name="MySQL_OCP">
-<source connection-jndi-name="java:/MySQL_OCP_DS" name="MySQL_OCP" translator-name="mysql5"/>
+<source connection-jndi-name="java:/Stock_MySQL_DS" name="MySQL_OCP" translator-name="mysql5"/>
 <metadata type="DDL"><![CDATA[
 
 CREATE FOREIGN TABLE vehicles_flow (
@@ -18,22 +34,6 @@ CREATE FOREIGN TABLE vehicles_flow (
 	paymenttype string(15) OPTIONS(NAMEINSOURCE '`paymenttype`', NATIVE_TYPE 'VARCHAR'),
 	amount integer OPTIONS(NAMEINSOURCE '`amount`', NATIVE_TYPE 'INT', FIXED_LENGTH 'TRUE')
 ) OPTIONS(NAMEINSOURCE '`Transport`.`vehicles_flow`', UPDATABLE 'TRUE');
-
-]]></metadata>
-</model>
-<model name="PostgreSQL_OCP">
-<source connection-jndi-name="java:/PostgreSQL_OCP_DS" name="PostgreSQL_OCP" translator-name="postgresql"/>
-<metadata type="DDL"><![CDATA[
-
-CREATE FOREIGN TABLE readings (
-	readingdate timestamp OPTIONS(NAMEINSOURCE '"readingdate"', NATIVE_TYPE 'timestamp', FIXED_LENGTH 'TRUE'),
-	temp double OPTIONS(NAMEINSOURCE '"temp"', NATIVE_TYPE 'float8', FIXED_LENGTH 'TRUE'),
-	station integer OPTIONS(NAMEINSOURCE '"station"', NATIVE_TYPE 'int4', FIXED_LENGTH 'TRUE'),
-	wind double OPTIONS(NAMEINSOURCE '"wind"', NATIVE_TYPE 'float8', FIXED_LENGTH 'TRUE'),
-	pressure double OPTIONS(NAMEINSOURCE '"pressure"', NATIVE_TYPE 'float8', FIXED_LENGTH 'TRUE'),
-	rain double OPTIONS(NAMEINSOURCE '"rain"', NATIVE_TYPE 'float8', FIXED_LENGTH 'TRUE'),
-	uvindex double OPTIONS(NAMEINSOURCE '"uvindex"', NATIVE_TYPE 'float8', FIXED_LENGTH 'TRUE')
-) OPTIONS(NAMEINSOURCE '"public"."readings"', UPDATABLE 'TRUE');
 
 ]]></metadata>
 </model>
